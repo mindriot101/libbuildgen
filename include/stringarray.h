@@ -16,5 +16,6 @@ void stringarray_free(StringArray *array);
 /* String management */
 void stringarray_append(StringArray *array, char *s);
 char *stringarray_concat(StringArray *array);
+char *stringarray_concat_with_flags(StringArray *array, char *flag);
 
 #endif //  STRINGARRAY_H_

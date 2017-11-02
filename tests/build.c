@@ -12,6 +12,9 @@ int main(int argc, char *argv[]) {
     }
 
     builder_add_source(builder, source_file);
+    builder_add_include_path(builder, "../include");
+    builder_add_link_path(builder, ".");
+    builder_link_to(builder, "buildgen");
     builder_compile_to(builder, output_binary);
 
     builder_free(builder);

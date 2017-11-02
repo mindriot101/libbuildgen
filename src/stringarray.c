@@ -47,19 +47,50 @@ char *stringarray_concat(StringArray *array) {
     NULL_CHECK(array, "cannot create array files string, array pointer is null\n");
     NULL_CHECK(array->data, "cannot create array files string, array files pointer is null\n");
 
-    uint32_t total_files_length = 0;
+    uint32_t total_length = 0;
     for (uint32_t i=0; i<array->length; i++) {
-        total_files_length += (strlen(array->data[i]) + 1);
+        total_length += (strlen(array->data[i]) + 1);
     }
 
-    char *out_str = malloc(total_files_length * sizeof(char) + 1);
+    char *out_str = malloc(total_length * sizeof(char) + 1);
     char *ptr = out_str;
     for (uint32_t i=0; i<array->length; i++) {
         char *text = array->data[i];
-        strncpy(ptr, text, strlen(text));
-        ptr += 1;
+        uint32_t text_len = strlen(text);
+        strncpy(ptr, text, text_len);
+        ptr += (text_len + 1);
     }
 
-    out_str[total_files_length - 1] = '\0';
+    out_str[total_length - 1] = '\0';
+    return out_str;
+}
+
+char *stringarray_concat_with_flags(StringArray *array, char *flag) {
+    NULL_CHECK(array, "cannot create array files string, array pointer is null\n");
+    NULL_CHECK(array->data, "cannot create array files string, array files pointer is null\n");
+
+    uint32_t flag_length = strlen(flag);
+    uint32_t total_length = 0;
+    for (uint32_t i=0; i<array->length; i++) {
+        /* e.g. ' -I blah ' */
+        total_length += (strlen(array->data[i]) + flag_length + 3);
+    }
+    char *out_str = malloc(total_length * sizeof(char) + 1);
+    char *ptr = out_str;
+    for (uint32_t i=0; i<array->length; i++) {
+        /* write the flag */
+        strncpy(ptr, flag, flag_length);
+        ptr += flag_length;
+        *ptr = ' ';
+        ptr += 1;
+
+        char *text = array->data[i];
+        uint32_t text_len = strlen(text);
+        strncpy(ptr, text, text_len);
+        ptr += (text_len + 1);
+    }
+
+
+    out_str[total_length - 1] = '\0';
     return out_str;
 }
