@@ -2,11 +2,10 @@
 #define BUILDGEN_H_
 
 #include <stdint.h>
+#include "stringarray.h"
 
 typedef struct {
-    char **files;
-    uint32_t files_length;
-    uint32_t files_capacity;
+    StringArray *files;
 } BuildgenBuilder;
 
 /* Memory allocation */

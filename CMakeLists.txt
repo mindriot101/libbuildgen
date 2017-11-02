@@ -5,8 +5,9 @@ set(CMAKE_C_STANDARD 11)
 project(libbuildgen)
 
 file(GLOB SOURCES src/*.c)
+file(GLOB HEADERS include/*.h)
 
-add_library(buildgen ${SOURCES})
+add_library(buildgen ${SOURCES} ${HEADERS})
 target_include_directories(buildgen PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(testbuild tests/build.c)
