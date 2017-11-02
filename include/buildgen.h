@@ -6,6 +6,7 @@
 
 typedef struct {
     StringArray *files;
+    StringArray *include_paths;
 } BuildgenBuilder;
 
 /* Memory allocation */
@@ -14,6 +15,8 @@ void builder_free(BuildgenBuilder *);
 
 /* Source file management */
 void builder_add_source(BuildgenBuilder *builder, char *filename);
+
+void builder_add_include_path(BuildgenBuilder *builder, char *path);
 
 /* Compilation */
 void builder_compile_to(BuildgenBuilder *builder, char *output);
